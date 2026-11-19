@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>查询历史分析器</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <div>
+          <h1>查询历史分析器</h1>
+          <p class="subtitle">读取本地执行记录与表统计，定位扫描、裁剪与文件布局问题</p>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <span id="data-badge" class="badge badge-muted" title="数据目录">本地数据湖</span>
+        <button id="btn-analyze" class="btn btn-primary" type="button">重新分析</button>
+      </div>
+    </header>
+
+    <nav class="tabs" role="tablist" aria-label="主导航">
+      <button class="tab is-active" role="tab" aria-selected="true" data-tab="advisories">建议</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="history">查询样本</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="validation">验证</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="ledger">应用与撤销记录</button>
+    </nav>
+
+    <main>
+      <section id="panel-advisories" class="panel is-active" role="tabpanel">
+        <div class="panel-grid">
+          <aside class="side">
+            <div class="side-head">
+              <h2>检测结果</h2>
+              <span id="advisory-count" class="count-pill">—</span>
+            </div>
+            <div class="filter-row" role="group" aria-label="按类型过滤">
+              <button class="chip is-active" data-kind="all">全部</button>
+              <button class="chip" data-kind="overscan">扫描过大</button>
+              <button class="chip" data-kind="partition_miss">分区未裁剪</button>
+              <button class="chip" data-kind="repeated_aggregation">重复聚合</button>
+              <button class="chip" data-kind="small_files">小文件</button>
+            </div>
+            <ul id="advisory-list" class="advisory-list" aria-label="建议列表"></ul>
+          </aside>
+          <div id="advisory-detail" class="detail">
+            <div class="empty-state">选择左侧一条建议查看依据、模拟与应用操作。</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="panel-history" class="panel" role="tabpanel">
+        <div class="panel-grid">
+          <aside class="side">
+            <div class="side-head">
+              <h2>查询指纹</h2>
+              <span id="group-count" class="count-pill">—</span>
+            </div>
+            <ul id="group-list" class="group-list" aria-label="查询指纹列表"></ul>
+          </aside>
+          <div id="history-detail" class="detail">
+            <div class="empty-state">选择左侧查询形状查看执行样本与计划。</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="panel-validation" class="panel" role="tabpanel">
+        <div id="validation-root" class="stack"></div>
+      </section>
+
+      <section id="panel-ledger" class="panel" role="tabpanel">
+        <div id="ledger-root" class="stack"></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="/app.js" type="module"></script>
+</body>
+</html>
